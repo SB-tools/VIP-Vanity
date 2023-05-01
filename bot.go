@@ -84,8 +84,7 @@ func onCommand(event *events.ApplicationCommandInteractionCreate) {
 	}
 	metaRequest.Header.Add("Authorization", cfApiToken)
 
-	rest := event.Client().Rest()
-	client := rest.HTTPClient()
+	client := event.Client().Rest().HTTPClient()
 	metaRs, err := client.Do(metaRequest)
 	if err != nil {
 		log.Error("there was an error while running a metadata request: ", err)
@@ -101,9 +100,7 @@ func onCommand(event *events.ApplicationCommandInteractionCreate) {
 		}
 		ownerID := response.Result.ID
 		if ownerID != userID {
-			_, _ = rest.CreateFollowupMessage(event.ApplicationID(), event.Token(), discord.MessageCreate{
-				Content: fmt.Sprintf("This vanity is already taken by <@%d>.", ownerID),
-			})
+			createFollowup(event, "This vanity is already taken by <@%d>.", ownerID)
 			return
 		}
 	}
@@ -126,12 +123,16 @@ func onCommand(event *events.ApplicationCommandInteractionCreate) {
 	}
 	code := valueRs.StatusCode
 	if code == http.StatusOK {
-		_, _ = rest.CreateFollowupMessage(event.ApplicationID(), event.Token(), discord.MessageCreate{
-			Content: fmt.Sprintf("Vanity `%s` associated with user id [`%s`](https://sb.ltn.fi/userid/%[2]s) has been successfully added.", vanity, pubUserID),
-		})
+		createFollowup(event, "Vanity `%s` associated with user id [`%s`](https://sb.ltn.fi/userid/%[2]s) has been successfully added.", vanity, pubUserID)
 	} else {
 		log.Warnf("received code %d after running a value request", code)
 	}
+}
+
+func createFollowup(event *events.ApplicationCommandInteractionCreate, s string, a ...any) {
+	_, _ = event.Client().Rest().CreateFollowupMessage(event.ApplicationID(), event.Token(), discord.MessageCreate{
+		Content: fmt.Sprintf(s, a...),
+	})
 }
 
 type MetadataResponse struct {
