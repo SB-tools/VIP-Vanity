@@ -22,12 +22,16 @@ import (
 	"syscall"
 )
 
+const (
+	cfURLPrefix    = "https://api.cloudflare.com/client/v4/accounts/6dccc8a823380a32fe8792904b2cd886/storage/kv/namespaces/b44b93e4cc174443aca099a3763b29ff"
+	metadataApiURL = cfURLPrefix + "/metadata/"
+	valuesApiURL   = cfURLPrefix + "/values/"
+)
+
 var (
-	metadataApiURL = "https://api.cloudflare.com/client/v4/accounts/6dccc8a823380a32fe8792904b2cd886/storage/kv/namespaces/b44b93e4cc174443aca099a3763b29ff/metadata/"
-	valuesApiURL   = "https://api.cloudflare.com/client/v4/accounts/6dccc8a823380a32fe8792904b2cd886/storage/kv/namespaces/b44b93e4cc174443aca099a3763b29ff/values/"
-	cfApiToken     = os.Getenv("CF_API_TOKEN")
-	publicIDRegex  = regexp.MustCompile(`^[a-f0-9]+$`)
-	vanityRegex    = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	cfApiToken    = os.Getenv("CF_API_TOKEN")
+	publicIDRegex = regexp.MustCompile(`^[a-f0-9]+$`)
+	vanityRegex   = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 )
 
 func main() {
