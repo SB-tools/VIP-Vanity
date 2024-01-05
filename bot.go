@@ -5,6 +5,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"mime/multipart"
+	"net/http"
+	"os"
+	"os/signal"
+	"regexp"
+	"strings"
+	"syscall"
+
 	"github.com/disgoorg/disgo"
 	"github.com/disgoorg/disgo/bot"
 	"github.com/disgoorg/disgo/cache"
@@ -13,13 +21,6 @@ import (
 	"github.com/disgoorg/disgo/gateway"
 	"github.com/disgoorg/log"
 	"github.com/disgoorg/snowflake/v2"
-	"mime/multipart"
-	"net/http"
-	"os"
-	"os/signal"
-	"regexp"
-	"strings"
-	"syscall"
 )
 
 const (
@@ -29,7 +30,7 @@ const (
 )
 
 var (
-	cfApiToken    = os.Getenv("CF_API_TOKEN")
+	cfApiToken    = os.Getenv("VIP_VANITY_CF_TOKEN")
 	publicIDRegex = regexp.MustCompile(`^[a-f0-9]+$`)
 	vanityRegex   = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 )
