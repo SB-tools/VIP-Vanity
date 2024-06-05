@@ -3,7 +3,7 @@ module vip-vanity
 go 1.21
 
 require (
-	github.com/disgoorg/disgo v0.18.6
+	github.com/disgoorg/disgo v0.18.7
 	github.com/disgoorg/log v1.2.1
 	github.com/disgoorg/snowflake/v2 v2.0.1
 )
