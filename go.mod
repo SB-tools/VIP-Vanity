@@ -1,6 +1,6 @@
 module vip-vanity
 
-go 1.21
+go 1.24
 
 require (
 	github.com/disgoorg/disgo v0.18.15
